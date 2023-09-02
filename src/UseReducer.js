@@ -1,54 +1,54 @@
-import React from 'react';
+import { useReducer, useEffect } from 'react';
+
 
 const SECURITY_CODE = 'paradigma';
 
 function UseReducer({ name }) {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const onConfirm = () => dispatch({ type: actionTypes.confirm });
   const onError = () => dispatch({ type: actionTypes.error });
   const onCheck = () => dispatch({ type: actionTypes.check });
   const onDelete = () => dispatch({ type: actionTypes.delete });
   const onReset = () => dispatch({ type: actionTypes.reset });
-  
   const onWrite = ({ target: { value } }) => {
     dispatch({ type: actionTypes.write, payload: value });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log("Empezando el efecto")
 
     if (!!state.loading) {
       setTimeout(() => {
         console.log("Haciendo la validación")
-  
+
         if (state.value === SECURITY_CODE) {
           onConfirm();
         } else {
           onError();
         }
-        
+
         console.log("terminando la validación")
       }, 3000);
     }
-    
+
     console.log("Terminando el efecto")
   }, [state.loading]);
-  
+
   if (!state.deleted && !state.confirmed) {
     return (
       <div>
         <h2>Eliminar {name}</h2>
-        
+
         <p>Por favor, escribe el código de seguridad.</p>
-  
+
         {(state.error && !state.loading) && (
           <p>Error: el código es incorrecto</p>
         )}
         {state.loading && (
           <p>Cargando...</p>
         )}
-  
+
         <input
           placeholder="Código de seguridad"
           value={state.value}
@@ -61,7 +61,7 @@ function UseReducer({ name }) {
     );
   } else if (!!state.confirmed && !state.deleted) {
     return (
-      <React.Fragment>
+      <>
         <p>Pedimos confirmación. ¿Tas segurx?</p>
 
         <button onClick={onDelete}>
@@ -70,17 +70,17 @@ function UseReducer({ name }) {
         <button onClick={onReset}>
           Nop, me arrepentí
         </button>
-      </React.Fragment>
+      </>
     );
   } else {
     return (
-      <React.Fragment>
+      <>
         <p>Eliminado con éxito</p>
 
         <button onClick={onReset}>
           Resetear, volver atrás
         </button>
-      </React.Fragment>
+      </>
     );
   }
 }

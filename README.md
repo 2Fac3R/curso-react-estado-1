@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# useState vs useReducer
+
+En este curso aprendimos a manejar el estado profesionalmente con React.js! Creamos estados independientes o compuestos, imperativos o declarativos, con funciones o clases, con useState o useReducer
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
